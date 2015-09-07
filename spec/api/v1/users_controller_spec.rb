@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::UsersController, type: :controller do
+describe API::V1::UsersController, type: :controller do
   before(:each) { request.headers['Accept'] = "application/vnd.marketplace.v1" }
 
   describe "list users at index" do
@@ -76,13 +76,26 @@ describe Api::V1::UsersController, type: :controller do
 
       it "includes proper error info" do
         parsed_response = JSON.parse(response.body, symbolize_names: true)
-        puts parsed_response
         expect(parsed_response[:errors][:password_confirmation]).to include "doesn't match Password"
       end
 
       it { should respond_with 422 }
     end
   end
+
+  describe "list users conversations" do
+    before(:each) do
+      @conversations = FactoryGirl.create_list(:conversation, 5)
+      @user = FactoryGirl.create :user
+      @conversations.each do |c|
+        c.users << @user
+      end
+      get :conversations, user_id: @user.id, format: :json
+    end
+
+    it "returns all of a user's conversations" do 
+      parsed_response = JSON.parse(response.body, symbolize_names: true)
+      expect(parsed_response.length).to eq(5)
+    end
+  end
 end
-
-

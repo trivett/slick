@@ -1,4 +1,4 @@
-class Api::V1::UsersController < ApplicationController
+class API::V1::UsersController < ApplicationController
   respond_to :json
   def index
     @users = User.all
@@ -16,6 +16,12 @@ class Api::V1::UsersController < ApplicationController
     else
       render json: { errors: @user.errors }, status: 422
     end
+  end
+
+  def conversations
+    @user = User.find(params[:user_id])
+    @conversations = @user.conversations
+    render json: @conversations
   end
 
   private

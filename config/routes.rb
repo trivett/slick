@@ -7,7 +7,13 @@ Rails.application.routes.draw do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do 
       
 
-      resources :users, only: [:index, :create, :show]
+      resources :users, only: [:index, :create, :show] do
+        get "conversations", to: "users#conversations"
+      end
+      resources :conversations, only: [:index, :create, :show] do
+        get "users", to: "conversations#users"
+      end
+
     end
   end
 end
