@@ -48,4 +48,22 @@ describe API::V1::ConversationsController ,type: :controller do
       end
     end
   end
+
+
+  describe "Conversation creation" do
+    context "successfully" do
+      before(:each) do
+        @conversation_attributes = FactoryGirl.attributes_for :conversation
+        post :create, { conversation: @conversation_attributes }, format: :json
+      end
+
+      it "renders the newborn conversation" do
+        parsed_response = JSON.parse(response.body, symbolize_names: true)
+        expect(parsed_response[:name]).to eql @conversation_attributes[:name]
+      end
+
+      it { should respond_with 201 }
+    end
+
+  end
 end
