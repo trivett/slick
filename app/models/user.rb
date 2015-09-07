@@ -5,4 +5,5 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :memberships
   has_many :conversations, :through => :memberships
+  has_many :messages, :through => :conversations
 end

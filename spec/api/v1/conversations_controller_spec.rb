@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe API::V1::ConversationsController ,type: :controller do
+describe API::V1::ConversationsController, type: :controller do
 
-  before(:each) { request.headers['Accept'] = "application/vnd.marketplace.v1" }
+  before(:each) { request.headers['Accept'] = "application/vnd.slick.v1" }
 
   describe "Listing available conversations" do
     before(:each) do      
@@ -61,9 +61,27 @@ describe API::V1::ConversationsController ,type: :controller do
         parsed_response = JSON.parse(response.body, symbolize_names: true)
         expect(parsed_response[:name]).to eql @conversation_attributes[:name]
       end
-
       it { should respond_with 201 }
     end
-
   end
+
+  # describe "Users join conversation" do
+    
+  #   it "succeeds or silently errors bc if you are already joined the job is" do 
+  #     @conversation = FactoryGirl.create :conversation
+  #     @conversation.save
+  #     @user = FactoryGirl.create :user
+  #     @user.save
+  #     put :admit_user, { conversation_id: @conversation.id.to_i, user_id: @user.id}, format: :json 
+
+  #     parsed_response = JSON.parse(response.body, symbolize_names: true)
+  #     expect(parsed_response).to include @user.to_json
+  #   end
+  # end
 end
+
+
+
+
+
+

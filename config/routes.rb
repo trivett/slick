@@ -9,9 +9,13 @@ Rails.application.routes.draw do
 
       resources :users, only: [:index, :create, :show] do
         get "conversations", to: "users#conversations"
+        get "messages", to: "users#messages"
       end
       resources :conversations, only: [:index, :create, :show] do
         get "users", to: "conversations#users"
+        put "admit_user/:user_id", to: "conversations#admit_user"
+        post "messages/create/:user_id", to: "messages#create"
+        get "messages", to: "conversation#messages"
       end
 
     end

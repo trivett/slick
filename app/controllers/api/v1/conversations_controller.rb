@@ -26,6 +26,15 @@ class API::V1::ConversationsController < ApplicationController
     end
   end
 
+  def admit_user
+    @user = User.find(params[:user_id])
+    @conversation = Conversation.find(params[:user_id])
+    #refactor to make sure we don't add the same user twice
+      @conversation.users << @user
+    
+    render json: @conversation.users
+  end
+
   private
 
   def conversation_params

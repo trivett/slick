@@ -24,6 +24,14 @@ class API::V1::UsersController < ApplicationController
     render json: @conversations
   end
 
+  def messages
+    @user = User.find(params[:user_id])
+    @messages = Message.where(user_id: @user.id)
+
+    render json: @messages
+  end
+
+
   private
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :name)

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe API::V1::UsersController, type: :controller do
-  before(:each) { request.headers['Accept'] = "application/vnd.marketplace.v1" }
+  before(:each) { request.headers['Accept'] = "application/vnd.slick.v1" }
 
   describe "list users at index" do
     before(:each) do
