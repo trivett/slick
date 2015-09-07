@@ -8,6 +8,7 @@ describe User do
   it { should respond_to(:name) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
+  it { should respond_to(:conversations) }
 
   it { should be_valid }
 end
