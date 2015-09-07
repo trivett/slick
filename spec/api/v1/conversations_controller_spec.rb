@@ -44,14 +44,6 @@ describe API::V1::ConversationsController ,type: :controller do
     context "successfully" do
       it "displays the right number of users" do
         parsed_response = JSON.parse(response.body)
-          i = 0
-        parsed_response.each do |p|
-          puts p
-          puts "______"
-          i += 1
-          puts i
-        end
-        
         expect(parsed_response.length).to eq(5)
       end
     end
