@@ -17,6 +17,12 @@ class API::V1::ConversationsController < ApplicationController
     render json: @users
   end
 
+  def messages
+    @conversation = Conversation.find(params[:conversation_id])
+    @messages = @conversation.messages
+    render json: @messages
+  end
+
   def create
     @conversation = Conversation.new(conversation_params)
     if @conversation.save

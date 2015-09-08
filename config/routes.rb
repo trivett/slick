@@ -15,7 +15,7 @@ Rails.application.routes.draw do
         get "users", to: "conversations#users"
         put "admit_user/:user_id", to: "conversations#admit_user"
         post "messages/create/:user_id", to: "messages#create"
-        get "messages", to: "conversation#messages"
+        get "messages", to: "conversations#messages"
       end
 
     end
