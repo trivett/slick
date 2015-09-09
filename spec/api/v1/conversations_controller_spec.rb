@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe API::V1::ConversationsController, type: :controller do
 
-  before(:each) { request.headers['Accept'] = "application/vnd.slick.v1" }
+  before(:each) { request.headers['Accept'] = "application/vnd.slick.v1, #{Mime::JSON}" }
 
   describe "Listing available conversations" do
     before(:each) do      
@@ -11,7 +11,7 @@ describe API::V1::ConversationsController, type: :controller do
     end
 
     it "responds with all all of the conversatoins" do
-      parsed_response = JSON.parse(response.body, symbolize_names: true)
+      parsed_response = json_response
       expect(parsed_response.length).to eq(5)
     end
   end
@@ -23,7 +23,7 @@ describe API::V1::ConversationsController, type: :controller do
     end
 
     it "renders a single conversation with the right name" do
-      parsed_response = JSON.parse(response.body, symbolize_names: true)
+      parsed_response = json_response
       expect(parsed_response[:name]).to eql @conversation.name
     end
     it { should respond_with 200 }
@@ -43,12 +43,31 @@ describe API::V1::ConversationsController, type: :controller do
 
     context "successfully" do
       it "displays the right number of users" do
-        parsed_response = JSON.parse(response.body)
+        parsed_response = json_response
         expect(parsed_response.length).to eq(5)
       end
     end
   end
 
+  describe "show the messages in a conversation" do
+    before(:each) do
+      @conversation = FactoryGirl.create :conversation
+      @messages = FactoryGirl.create_list(:message, 5)
+
+      @messages.each do |u|
+        @conversation.messages << u
+      end
+
+      get :messages, conversation_id: @conversation.id, format: :json
+    end
+
+    context "successfully" do
+      it "displays the right number of messages" do
+        parsed_response = JSON.parse(response.body)
+        expect(parsed_response.length).to eq(5)
+      end
+    end
+  end
 
   describe "Conversation creation" do
     context "successfully" do
@@ -58,26 +77,12 @@ describe API::V1::ConversationsController, type: :controller do
       end
 
       it "renders the newborn conversation" do
-        parsed_response = JSON.parse(response.body, symbolize_names: true)
+        parsed_response = json_response
         expect(parsed_response[:name]).to eql @conversation_attributes[:name]
       end
       it { should respond_with 201 }
     end
   end
-
-  # describe "Users join conversation" do
-    
-  #   it "succeeds or silently errors bc if you are already joined the job is" do 
-  #     @conversation = FactoryGirl.create :conversation
-  #     @conversation.save
-  #     @user = FactoryGirl.create :user
-  #     @user.save
-  #     put :admit_user, { conversation_id: @conversation.id.to_i, user_id: @user.id}, format: :json 
-
-  #     parsed_response = JSON.parse(response.body, symbolize_names: true)
-  #     expect(parsed_response).to include @user.to_json
-  #   end
-  # end
 end
 
 

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe API::V1::UsersController, type: :controller do
-  before(:each) { request.headers['Accept'] = "application/vnd.slick.v1" }
+  before(:each) { request.headers['Accept'] = "application/vnd.slick.v1, #{Mime::JSON}" }
 
   describe "list users at index" do
     before(:each) do
@@ -10,7 +10,7 @@ describe API::V1::UsersController, type: :controller do
     end
 
     it "returns all the users" do
-      parsed_response = JSON.parse(response.body, symbolize_names: true)
+      parsed_response = json_response
       expect(parsed_response.length).to eq(5)
     end
 
@@ -23,7 +23,7 @@ describe API::V1::UsersController, type: :controller do
     end
 
     it "show's the user's info" do
-      parsed_response = JSON.parse(response.body, symbolize_names: true)
+      parsed_response = json_response
       expect(parsed_response[:email]).to eql @user.email
     end
 
@@ -39,7 +39,7 @@ describe API::V1::UsersController, type: :controller do
       end
 
       it "renders the newborn user" do
-        parsed_response = JSON.parse(response.body, symbolize_names: true)
+        parsed_response = json_response
         expect(parsed_response[:email]).to eql @user_attributes[:email]
       end
 
@@ -53,12 +53,12 @@ describe API::V1::UsersController, type: :controller do
       end
 
       it "shows an error" do
-        parsed_response = JSON.parse(response.body, symbolize_names: true)
+        parsed_response = json_response
         expect(parsed_response).to have_key(:errors)
       end
 
       it "includes proper error info" do
-        parsed_response = JSON.parse(response.body, symbolize_names: true)
+        parsed_response = json_response
         expect(parsed_response[:errors][:email]).to include "can't be blank"
       end
     end
@@ -70,12 +70,12 @@ describe API::V1::UsersController, type: :controller do
       end
 
       it "shows an error" do
-        parsed_response = JSON.parse(response.body, symbolize_names: true)
+        parsed_response = json_response
         expect(parsed_response).to have_key(:errors)
       end
 
       it "includes proper error info" do
-        parsed_response = JSON.parse(response.body, symbolize_names: true)
+        parsed_response = json_response
         expect(parsed_response[:errors][:password_confirmation]).to include "doesn't match Password"
       end
 
@@ -94,7 +94,7 @@ describe API::V1::UsersController, type: :controller do
     end
 
     it "returns all of a user's conversations" do 
-      parsed_response = JSON.parse(response.body, symbolize_names: true)
+      parsed_response = json_response
       expect(parsed_response.length).to eq(5)
     end
   end
