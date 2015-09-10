@@ -16,19 +16,6 @@ describe API::V1::ConversationsController, type: :controller do
     end
   end
 
-  describe "render the conversation" do
-    before(:each) do
-      @conversation = FactoryGirl.create :conversation
-      get :show, id: @conversation.id, format: :json 
-    end
-
-    it "renders a single conversation with the right name" do
-      parsed_response = json_response
-      expect(parsed_response[:name]).to eql @conversation.name
-    end
-    it { should respond_with 200 }
-  end
-
   describe "show the users in a conversation" do
     before(:each) do
       @conversation = FactoryGirl.create :conversation

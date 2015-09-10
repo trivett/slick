@@ -16,20 +16,7 @@ describe API::V1::UsersController, type: :controller do
 
     it { should respond_with 200 }
   end
-  describe "show a single user" do
-    before(:each) do
-      @user = FactoryGirl.create :user
-      get :show, id: @user.id, format: :json
-    end
-
-    it "show's the user's info" do
-      parsed_response = json_response
-      expect(parsed_response[:email]).to eql @user.email
-    end
-
-    it { should respond_with 200 }
-  end
-
+  
 
   describe "User creation" do
     context "successfully" do

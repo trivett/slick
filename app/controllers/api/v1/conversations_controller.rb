@@ -8,7 +8,6 @@ class API::V1::ConversationsController < ApplicationController
 
   def show
     @conversation = Conversation.find(params[:id])
-    render json: @conversation
   end
 
   def users

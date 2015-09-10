@@ -51,7 +51,7 @@ $ curl -X GET -H "Content-Type: application/json" api.slick.dev:3000/users
 
 ```
 
-### Render one user by id
+### Render one user by id along with the user's conversations
 
 ```
 GET /users/:id
@@ -62,7 +62,24 @@ Example
 ```
 $ curl -X GET -H "Content-Type: application/json" api.slick.dev:3000/users/2
 
-{"id":2,"email":"nola@stiedemannshanahan.name","created_at":"2015-09-07T22:07:03.794Z","updated_at":"2015-09-07T22:07:03.794Z","name":"Ned Murray"}%
+{
+user: "Ned Murray",
+email: "nola@stiedemannshanahan.name",
+messages: [
+{
+conversation: {
+id: 2,
+name: "Bloody Friday"
+},
+content: "Moon trust fund you probably haven't heard of them mixtape cardigan etsy stumptown hoodie."
+},
+{
+conversation: {
+id: 2,
+name: "Bloody Friday"
+},
+content: "Moon trust fund you probably haven't heard of them mixtape cardigan etsy stumptown hoodie."
+}, ....
 
 ```
 
@@ -126,6 +143,44 @@ $ curl -X GET -H "Content-Type: application/json" api.slick.dev:3000/conversatio
 [{"id":1,"name":"Diaries 2: Electric Boogaloo"},{"id":2,"name":"Bloody Friday"},{"id":3,"name":"Brains 2: Electric Boogaloo"},{"id":4,"name":"The White Rose of England"}, ....]
 
 ```
+
+### Show a conversation along with its messages
+
+```
+GET /conversations/:id
+```
+
+Example
+
+
+```
+$ curl -X GET -H "Content-Type: application/json" api.slick.dev:3000/conversations/2
+{
+conversation: "Bloody Friday",
+name: "Bloody Friday",
+messages: [
+{
+user: {
+id: 2,
+email: "nola@stiedemannshanahan.name",
+created_at: "2015-09-07T22:07:03.794Z",
+updated_at: "2015-09-07T22:07:03.794Z",
+name: "Ned Murray"
+},
+content: "Moon trust fund you probably haven't heard of them mixtape cardigan etsy stumptown hoodie."
+},
+{
+user: {
+id: 2,
+email: "nola@stiedemannshanahan.name",
+created_at: "2015-09-07T22:07:03.794Z",
+updated_at: "2015-09-07T22:07:03.794Z",
+name: "Ned Murray"
+},
+content: "Iphone messenger bag put a bird on it fap next level before they sold out."
+},
+```
+
 
 ### List users participating in a given conversation
 
