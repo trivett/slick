@@ -51,7 +51,7 @@ $ curl -X GET -H "Content-Type: application/json" api.slick.dev:3000/users
 
 ```
 
-### Render one user by id along with the user's conversations
+### Render one user by id along with the user's messages
 
 ```
 GET /users/:id
